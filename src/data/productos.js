@@ -4,7 +4,7 @@ export const productos = [
     nombre: "Flan Napolitano Clásico",
     descripcion: "Delicioso flan casero con caramelo, arequipe, suave y cremoso.",
     precio: 10000,
-    imagen: "src/assets/flanes/flan-napolitano.jpg",
+    imagen: "/flanes/flan-napolitano.jpg",
     categoria: "flanes"
   },
   {
@@ -12,15 +12,15 @@ export const productos = [
     nombre: "Flan de Coco",
     descripcion: "Delicioso flan de Coco.",
     precio: 10000,
-    imagen: "src/assets/flanes/flan-de-coco.jpg",
+    imagen: "/flanes/flan-de-coco.jpg",
     categoria: "flanes"
   },
-{
+  {
     id: 3,
     nombre: "Flan de Chocolate",
     descripcion: "Delicioso flan de Chocolate.",
     precio: 10000,
-    imagen: "src/assets/flanes/flan-chocolate.jpg",
+    imagen: "/flanes/flan-chocolate.jpg",
     categoria: "flanes"
   },
   {
@@ -28,7 +28,7 @@ export const productos = [
     nombre: "Postre de Tres Leches",
     descripcion: "Postre bañado en tres leches con un toque de canela.",
     precio: 10000,
-    imagen: "src/assets/postres/postre-tres-leches.jpg", 
+    imagen: "/postres/postre-tres-leches.jpg", 
     categoria: "postres"
   },
   {
@@ -36,7 +36,7 @@ export const productos = [
     nombre: "Postre de Maracuyá",
     descripcion: "Equilibrio perfecto entre dulce y ácido. Muy refrescante.",
     precio: 10000,
-    imagen: "src/assets/postres/postre-maracuya.jpeg", 
+    imagen: "/postres/postre-maracuya.jpeg", 
     categoria: "postres"
   },
   {
@@ -44,7 +44,7 @@ export const productos = [
     nombre: "Postre de Limón",
     descripcion: "Equilibrio perfecto entre dulce y ácido. Muy refrescante.",
     precio: 10000,
-    imagen: "src/assets/postres/postre-limon.jpeg", 
+    imagen: "/postres/postre-limon.jpeg", 
     categoria: "postres"
   }
 ];
