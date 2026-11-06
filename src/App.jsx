@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { productos } from './data/productos';
 import { ProductCard } from './components/ProductCard';
 import { CartButton } from './components/CartButton';
+import { CartModal } from './components/CartModal';
 
 function App() {
   const flanes = productos.filter(p => p.categoria === 'flanes');
@@ -16,7 +17,7 @@ function App() {
         <h1 className="text-4xl md:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
           Yummy Postres
         </h1>
-        <p className="text-gray-400 mt-2 text-lg">Haz tu pedido para este fin de semana 🍮</p>
+        <p className="text-gray-400 mt-2 text-lg">Haz tu pedido para mañana ☀️🍮</p>
       </header>
 
       <main className="space-y-12">
@@ -48,20 +49,9 @@ function App() {
       {/* Botón flotante del carrito */}
       <CartButton onOpenCart={() => setIsCartOpen(true)} />
 
-      {/* Aquí irá el Modal del carrito en el siguiente paso */}
+      {/* Modal del carrito */}
       {isCartOpen && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
-          <div className="bg-[#1e1e1e] p-8 rounded-2xl border border-gray-800 text-center">
-            <h2 className="text-2xl text-white mb-4">Modal del Carrito</h2>
-            <p className="text-gray-400 mb-6">Próximamente agregaremos los detalles aquí.</p>
-            <button 
-              onClick={() => setIsCartOpen(false)}
-              className="bg-gray-700 hover:bg-gray-600 text-white px-6 py-2 rounded-xl"
-            >
-              Cerrar
-            </button>
-          </div>
-        </div>
+        <CartModal onClose={() => setIsCartOpen(false)} />
       )}
     </div>
   )

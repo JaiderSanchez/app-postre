@@ -4,23 +4,47 @@ export const productos = [
     nombre: "Flan Napolitano Clásico",
     descripcion: "Delicioso flan casero con caramelo, arequipe, suave y cremoso.",
     precio: 10000,
-    imagen: "src/assets/flan-napolitano.jpg", // Deja la URL que ya pusiste
+    imagen: "src/assets/flanes/flan-napolitano.jpg",
     categoria: "flanes"
   },
   {
     id: 2,
+    nombre: "Flan de Coco",
+    descripcion: "Delicioso flan de Coco.",
+    precio: 10000,
+    imagen: "src/assets/flanes/flan-de-coco.jpg",
+    categoria: "flanes"
+  },
+{
+    id: 3,
+    nombre: "Flan de Chocolate",
+    descripcion: "Delicioso flan de Chocolate.",
+    precio: 10000,
+    imagen: "src/assets/flanes/flan-chocolate.jpg",
+    categoria: "flanes"
+  },
+  {
+    id: 4,
     nombre: "Postre de Tres Leches",
     descripcion: "Postre bañado en tres leches con un toque de canela.",
     precio: 10000,
-    imagen: "src/assets/postre-tres-leches.jpg", 
+    imagen: "src/assets/postres/postre-tres-leches.jpg", 
     categoria: "postres"
   },
   {
-    id: 3,
+    id: 5,
     nombre: "Postre de Maracuyá",
     descripcion: "Equilibrio perfecto entre dulce y ácido. Muy refrescante.",
     precio: 10000,
-    imagen: "src/assets/postre-maracuya.jpeg", 
+    imagen: "src/assets/postres/postre-maracuya.jpeg", 
+    categoria: "postres"
+  },
+  {
+    id: 6,
+    nombre: "Postre de Limón",
+    descripcion: "Equilibrio perfecto entre dulce y ácido. Muy refrescante.",
+    precio: 10000,
+    imagen: "src/assets/postres/postre-limon.jpeg", 
     categoria: "postres"
   }
 ];
