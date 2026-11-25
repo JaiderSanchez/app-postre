@@ -27,8 +27,8 @@ function App() {
             <i className='bx bxs-pie-chart-alt-2 text-[#B97845]'></i> Flanes Especiales
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {flanes.map((producto) => (
-              <ProductCard key={producto.id} producto={producto} />
+            {flanes.map((producto, index) => (
+              <ProductCard key={producto.id} producto={producto} index={index}/>
             ))}
           </div>
         </section>
@@ -39,11 +39,12 @@ function App() {
             <i className='bx bxs-cake text-[#B97845]'></i> Postres Caseros
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {postres.map((producto) => (
-              <ProductCard key={producto.id} producto={producto} />
+            {postres.map((producto, index) => (
+              <ProductCard key={producto.id} producto={producto} index={index} />
             ))}
           </div>
         </section>
+        
       </main>
 
       <CartButton onOpenCart={() => setIsCartOpen(true)} />

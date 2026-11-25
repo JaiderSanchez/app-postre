@@ -1,10 +1,17 @@
+import { motion } from 'framer-motion';
 import { useCartStore } from '../store/cartStore';
 
-export const ProductCard = ({ producto }) => {
+export const ProductCard = ({ producto, index = 0 }) => {
   const agregarAlCarrito = useCartStore((state) => state.agregarAlCarrito);
 
   return (
-    <div className="bg-[#FFFFFF] rounded-2xl overflow-hidden shadow-md border border-[#39251E]/10 transition-transform transform hover:scale-105">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: index * 0.1 }}
+      whileHover={{ y: -5 }}
+      className="bg-[#FFFFFF] rounded-2xl overflow-hidden shadow-md border border-[#39251E]/10"
+    >
       <img 
         src={producto.imagen} 
         alt={producto.nombre} 
@@ -17,15 +24,16 @@ export const ProductCard = ({ producto }) => {
           <span className="text-lg font-bold text-[#B97845]">
             ${producto.precio.toLocaleString('es-CO')}
           </span>
-          <button 
+          <motion.button 
+            whileTap={{ scale: 0.92 }}
             onClick={() => agregarAlCarrito(producto)}
             className="bg-[#75452E] hover:bg-[#59331F] text-white px-4 py-2 rounded-xl text-sm font-medium flex items-center gap-2 transition-colors cursor-pointer shadow-sm"
           >
             <i className='bx bx-cart-add text-xl'></i>
             Agregar
-          </button>
+          </motion.button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useCartStore } from '../store/cartStore';
 
 export const CartModal = ({ onClose }) => {
@@ -8,6 +8,21 @@ export const CartModal = ({ onClose }) => {
   const [direccion, setDireccion] = useState('');
   const [notas, setNotas] = useState('');
   const [metodoPago, setMetodoPago] = useState('efectivo');
+
+  // Referencia para apuntar al cuadro de datos de 'Transferencia'
+  const transferenciaRef = useRef(null);
+
+  // Efecto que dispara el scroll suave cuando el usuario elige 'Transferencia'
+  useEffect(() => {
+    if (metodoPago === 'transferencia' && transferenciaRef.current) {
+      setTimeout(() => {
+        transferenciaRef.current.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'nearest' 
+        });
+      }, 100);
+    }
+  }, [metodoPago]);
 
   const total = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
 
@@ -109,7 +124,10 @@ export const CartModal = ({ onClose }) => {
             </div>
 
             {metodoPago === 'transferencia' && (
-              <div className="bg-[#FFF8EF] p-4 rounded-xl border border-[#B97845]/40 mt-2">
+              <div 
+                ref={transferenciaRef}
+                className="bg-[#FFF8EF] p-4 rounded-xl border border-[#B97845]/40 mt-2 animate-fadeIn"
+              >
                 <h4 className="text-[#75452E] font-bold mb-2 flex items-center gap-2">
                   <i className='bx bx-mobile-alt'></i> Datos para Transferencia
                 </h4>
