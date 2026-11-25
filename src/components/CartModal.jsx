@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useCartStore } from '../store/cartStore';
 
 export const CartModal = ({ onClose }) => {
@@ -9,18 +10,16 @@ export const CartModal = ({ onClose }) => {
   const [notas, setNotas] = useState('');
   const [metodoPago, setMetodoPago] = useState('efectivo');
 
-  // Referencia para apuntar al cuadro de datos de 'Transferencia'
   const transferenciaRef = useRef(null);
 
-  // Efecto que dispara el scroll suave cuando el usuario elige 'Transferencia'
   useEffect(() => {
     if (metodoPago === 'transferencia' && transferenciaRef.current) {
       setTimeout(() => {
-        transferenciaRef.current.scrollIntoView({ 
+        transferenciaRef.current?.scrollIntoView({ 
           behavior: 'smooth', 
           block: 'nearest' 
         });
-      }, 100);
+      }, 150);
     }
   }, [metodoPago]);
 
@@ -47,53 +46,108 @@ export const CartModal = ({ onClose }) => {
 
   if (carrito.length === 0) {
     return (
-      <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-        <div className="bg-[#FFFFFF] p-8 rounded-2xl border border-[#39251E]/15 text-center w-full max-w-md shadow-xl">
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+      >
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.9, y: 20 }}
+          transition={{ type: "spring", stiffness: 350, damping: 25 }}
+          className="bg-[#FFFFFF] p-8 rounded-2xl border border-[#39251E]/15 text-center w-full max-w-md shadow-xl"
+        >
           <i className='bx bx-cart text-6xl text-[#B97845] mb-4'></i>
           <h2 className="text-2xl font-bold text-[#39251E] mb-2">Tu carrito está vacío</h2>
           <p className="text-[#39251E]/70 mb-6">Agrega algunos postres deliciosos para continuar.</p>
-          <button onClick={onClose} className="bg-[#75452E] hover:bg-[#59331F] text-white px-6 py-2.5 rounded-xl w-full font-medium transition-colors">
+          <motion.button 
+            whileTap={{ scale: 0.94 }}
+            onClick={onClose} 
+            className="bg-[#75452E] hover:bg-[#59331F] text-white px-6 py-2.5 rounded-xl w-full font-medium transition-colors"
+          >
             Volver al menú
-          </button>
-        </div>
-      </div>
+          </motion.button>
+        </motion.div>
+      </motion.div>
     );
   }
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-[#FFFFFF] rounded-2xl border border-[#39251E]/15 w-full max-w-md max-h-[90vh] flex flex-col overflow-hidden shadow-2xl">
-        
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+    >
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.92, y: 30 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.92, y: 30 }}
+        transition={{ type: "spring", stiffness: 350, damping: 28 }}
+        className="bg-[#FFFFFF] rounded-2xl border border-[#39251E]/15 w-full max-w-md max-h-[90vh] flex flex-col overflow-hidden shadow-2xl"
+      >
         {/* Cabecera */}
         <div className="flex justify-between items-center p-4 border-b border-[#39251E]/10">
           <h2 className="text-xl font-bold text-[#39251E]">Tu Pedido</h2>
-          <button onClick={onClose} className="text-[#39251E]/60 hover:text-[#39251E] text-2xl">
+          <motion.button 
+            whileTap={{ scale: 0.85 }}
+            onClick={onClose} 
+            className="text-[#39251E]/60 hover:text-[#39251E] text-2xl"
+          >
             <i className='bx bx-x'></i>
-          </button>
+          </motion.button>
         </div>
 
         {/* Cuerpo Scrolleable */}
         <div className="p-4 overflow-y-auto flex-1">
           <div className="space-y-3 mb-6">
-            {carrito.map(item => (
-              <div key={item.id} className="flex gap-3 bg-[#FFF8EF] p-3 rounded-xl border border-[#39251E]/10 items-center">
-                <img src={item.imagen} alt={item.nombre} className="w-16 h-16 object-cover rounded-lg" />
-                <div className="flex-1">
-                  <h4 className="text-[#39251E] text-sm font-bold">{item.nombre}</h4>
-                  <p className="text-[#B97845] font-semibold text-sm">${(item.precio * item.cantidad).toLocaleString('es-CO')}</p>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <button onClick={() => eliminarDelCarrito(item.id)} className="text-red-500 hover:text-red-700">
-                    <i className='bx bx-trash text-lg'></i>
-                  </button>
-                  <div className="flex items-center gap-2 bg-[#FFFFFF] border border-[#39251E]/15 rounded-lg px-2 py-1">
-                    <button onClick={() => disminuirCantidad(item.id)} className="text-[#75452E] hover:text-[#59331F]"><i className='bx bx-minus'></i></button>
-                    <span className="text-[#39251E] font-semibold text-sm">{item.cantidad}</span>
-                    <button onClick={() => agregarAlCarrito(item)} className="text-[#75452E] hover:text-[#59331F]"><i className='bx bx-plus'></i></button>
+            <AnimatePresence initial={false}>
+              {carrito.map(item => (
+                <motion.div 
+                  key={item.id}
+                  layout
+                  initial={{ opacity: 0, x: -15 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20, transition: { duration: 0.2 } }}
+                  className="flex gap-3 bg-[#FFF8EF] p-3 rounded-xl border border-[#39251E]/10 items-center"
+                >
+                  <img src={item.imagen} alt={item.nombre} className="w-16 h-16 object-cover rounded-lg" />
+                  <div className="flex-1">
+                    <h4 className="text-[#39251E] text-sm font-bold">{item.nombre}</h4>
+                    <p className="text-[#B97845] font-semibold text-sm">${(item.precio * item.cantidad).toLocaleString('es-CO')}</p>
                   </div>
-                </div>
-              </div>
-            ))}
+                  <div className="flex flex-col items-center gap-2">
+                    <motion.button 
+                      whileTap={{ scale: 0.8 }}
+                      onClick={() => eliminarDelCarrito(item.id)} 
+                      className="text-red-500 hover:text-red-700"
+                    >
+                      <i className='bx bx-trash text-lg'></i>
+                    </motion.button>
+                    <div className="flex items-center gap-2 bg-[#FFFFFF] border border-[#39251E]/15 rounded-lg px-2 py-1">
+                      <motion.button 
+                        whileTap={{ scale: 0.75 }}
+                        onClick={() => disminuirCantidad(item.id)} 
+                        className="text-[#75452E] hover:text-[#59331F]"
+                      >
+                        <i className='bx bx-minus'></i>
+                      </motion.button>
+                      <span className="text-[#39251E] font-semibold text-sm min-w-[1rem] text-center">{item.cantidad}</span>
+                      <motion.button 
+                        whileTap={{ scale: 0.75 }}
+                        onClick={() => agregarAlCarrito(item)} 
+                        className="text-[#75452E] hover:text-[#59331F]"
+                      >
+                        <i className='bx bx-plus'></i>
+                      </motion.button>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
 
           {/* Formulario del cliente */}
@@ -123,19 +177,25 @@ export const CartModal = ({ onClose }) => {
               </div>
             </div>
 
-            {metodoPago === 'transferencia' && (
-              <div 
-                ref={transferenciaRef}
-                className="bg-[#FFF8EF] p-4 rounded-xl border border-[#B97845]/40 mt-2 animate-fadeIn"
-              >
-                <h4 className="text-[#75452E] font-bold mb-2 flex items-center gap-2">
-                  <i className='bx bx-mobile-alt'></i> Datos para Transferencia
-                </h4>
-                <p className="text-[#39251E] text-sm"><strong>Nequi:</strong> 320 000 0000</p>
-                <p className="text-[#39251E] text-sm"><strong>Llave Bre-b:</strong> @llavebre-be</p>
-                <p className="text-[#39251E]/70 text-xs mt-2">* Por favor, ten el comprobante listo para enviarlo por WhatsApp.</p>
-              </div>
-            )}
+            <AnimatePresence>
+              {metodoPago === 'transferencia' && (
+                <motion.div 
+                  ref={transferenciaRef}
+                  initial={{ opacity: 0, y: 12, scale: 0.97 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -8, scale: 0.97 }}
+                  transition={{ duration: 0.25 }}
+                  className="bg-[#FFF8EF] p-4 rounded-xl border border-[#B97845]/40 mt-2"
+                >
+                  <h4 className="text-[#75452E] font-bold mb-2 flex items-center gap-2">
+                    <i className='bx bx-mobile-alt'></i> Datos para Transferencia
+                  </h4>
+                  <p className="text-[#39251E] text-sm"><strong>Nequi:</strong> 320 000 0000</p>
+                  <p className="text-[#39251E] text-sm"><strong>Llave Bre-b:</strong> @llavebre-be</p>
+                  <p className="text-[#39251E]/70 text-xs mt-2">* Por favor, ten el comprobante listo para enviarlo por WhatsApp.</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </form>
         </div>
 
@@ -145,12 +205,18 @@ export const CartModal = ({ onClose }) => {
             <span className="text-[#39251E]/80 font-medium">Total a pagar:</span>
             <span className="text-2xl font-extrabold text-[#B97845]">${total.toLocaleString('es-CO')}</span>
           </div>
-          <button form="order-form" type="submit" className="w-full bg-[#75452E] hover:bg-[#59331F] text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-md">
+          <motion.button 
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.95 }}
+            form="order-form" 
+            type="submit" 
+            className="w-full bg-[#75452E] hover:bg-[#59331F] text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-md"
+          >
             <i className='bx bxl-whatsapp text-2xl'></i>
             Confirmar y Enviar
-          </button>
+          </motion.button>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };

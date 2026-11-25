@@ -6,10 +6,15 @@ export const ProductCard = ({ producto, index = 0 }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: index * 0.1 }}
-      whileHover={{ y: -5 }}
+      initial={{ opacity: 0, y: 35 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ 
+        duration: 0.5, 
+        delay: index * 0.15, 
+        ease: [0.22, 1, 0.36, 1] 
+      }}
+      whileHover={{ y: -6, transition: { duration: 0.2 } }}
       className="bg-[#FFFFFF] rounded-2xl overflow-hidden shadow-md border border-[#39251E]/10"
     >
       <img 
@@ -25,7 +30,9 @@ export const ProductCard = ({ producto, index = 0 }) => {
             ${producto.precio.toLocaleString('es-CO')}
           </span>
           <motion.button 
-            whileTap={{ scale: 0.92 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.85 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
             onClick={() => agregarAlCarrito(producto)}
             className="bg-[#75452E] hover:bg-[#59331F] text-white px-4 py-2 rounded-xl text-sm font-medium flex items-center gap-2 transition-colors cursor-pointer shadow-sm"
           >
